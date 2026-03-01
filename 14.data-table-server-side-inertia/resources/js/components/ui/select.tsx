@@ -1,6 +1,6 @@
-import * as SelectPrimitive from "@radix-ui/react-select"
-import { CheckIcon, ChevronDownIcon, ChevronUpIcon } from "lucide-react"
 import * as React from "react"
+import { CheckIcon, ChevronDownIcon, ChevronUpIcon } from "lucide-react"
+import { Select as SelectPrimitive } from "radix-ui"
 
 import { cn } from "@/lib/utils"
 
@@ -51,9 +51,7 @@ function SelectTrigger({
 function SelectContent({
   className,
   children,
-  position = "popper",
-  side = "bottom",
-  sideOffset = 4,
+  position = "item-aligned",
   align = "center",
   ...props
 }: React.ComponentProps<typeof SelectPrimitive.Content>) {
@@ -68,9 +66,6 @@ function SelectContent({
           className
         )}
         position={position}
-        side={side}
-        sideOffset={sideOffset}
-        avoidCollisions={false}
         align={align}
         {...props}
       >

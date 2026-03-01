@@ -42,6 +42,7 @@ interface UsersPaginated {
 
 interface Filters {
     search: string;
+    perPage: number;
 }
 
 interface PageProps {
@@ -108,7 +109,11 @@ export default function Users({ users, filters }: PageProps) {
                             )}
                         </TableBody>
                     </Table>
-                    <Pagination links={users.links} />
+                    <Pagination
+                        links={users.links}
+                        route={usersRoute()}
+                        currentPage={filters.perPage.toString()}
+                    />
                 </div>
             </div>
         </AppLayout>

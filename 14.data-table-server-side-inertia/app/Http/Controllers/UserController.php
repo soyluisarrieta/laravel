@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -14,15 +13,18 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
+        $perPage = $request->perPage ?? 10;
+
         $users = User::search($request->search)
             ->latest()
-            ->paginate(10)
+            ->paginate($perPage)
             ->withQueryString();
 
         return Inertia::render('users', [
             'users' => $users,
             'filters' => [
-                'search' => $request->search
+                'search' => $request->search,
+                'perPage' => $perPage
             ]
         ]);
     }
