@@ -2,7 +2,6 @@ import { Head } from '@inertiajs/react';
 import InputSearch from '@/components/data-table/data-table-input-search';
 import Pagination from '@/components/data-table/data-table-pagination';
 import { Badge } from '@/components/ui/badge';
-import { Separator } from '@/components/ui/separator';
 import {
     Table,
     TableBody,
@@ -55,7 +54,7 @@ export default function Users({ users, filters }: PageProps) {
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Users" />
             <div className="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
-                <div className="w-full max-w-7xl self-center">
+                <div className="w-full max-w-7xl space-y-2 self-center">
                     <InputSearch
                         route={usersRoute()}
                         initialValue={filters.search}
@@ -109,7 +108,6 @@ export default function Users({ users, filters }: PageProps) {
                             )}
                         </TableBody>
                     </Table>
-                    <Separator className="mb-2" />
                     <Pagination links={users.links} />
                 </div>
             </div>
