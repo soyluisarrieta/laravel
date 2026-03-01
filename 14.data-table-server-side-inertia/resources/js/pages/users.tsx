@@ -1,4 +1,4 @@
-import { Head } from '@inertiajs/react';
+import { Head, useForm } from '@inertiajs/react';
 import InputSearch from '@/components/data-table/data-table-input-search';
 import Pagination from '@/components/data-table/data-table-pagination';
 import { Badge } from '@/components/ui/badge';
@@ -40,7 +40,7 @@ interface UsersPaginated {
     links: PageLinkItem[];
 }
 
-interface Filters {
+export interface Filters {
     search: string;
     perPage: number;
 }
@@ -51,16 +51,24 @@ interface PageProps {
 }
 
 export default function Users({ users, filters }: PageProps) {
+    const { data, setData } = useForm({
+        search: filters.search || '',
+        perPage: filters.perPage,
+    });
+
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Users" />
             <div className="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
                 <div className="w-full max-w-7xl space-y-2 self-center">
                     <InputSearch
+                        filters={filters}
                         route={usersRoute()}
-                        initialValue={filters.search}
+                        value={data.search}
+                        onValueChange={(value) => setData('search', value)}
                         placeholder="Search users..."
                     />
+
                     <Table>
                         <TableHeader>
                             <TableRow className="border-0! [&>th]:bg-muted [&>th]:text-muted-foreground [&>th]:first:rounded-l-xl [&>th]:last:rounded-r-xl">
@@ -109,10 +117,15 @@ export default function Users({ users, filters }: PageProps) {
                             )}
                         </TableBody>
                     </Table>
+
                     <Pagination
-                        links={users.links}
+                        filters={filters}
                         route={usersRoute()}
-                        currentPage={filters.perPage.toString()}
+                        links={users.links}
+                        currentPage={data.perPage.toString()}
+                        onCurrentPageChange={(value) =>
+                            setData('perPage', Number(value))
+                        }
                     />
                 </div>
             </div>

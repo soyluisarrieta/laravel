@@ -1,5 +1,4 @@
 import { Link, router } from '@inertiajs/react';
-import { useState } from 'react';
 import { Label } from '@/components/ui/label';
 import {
     Select,
@@ -9,27 +8,29 @@ import {
     SelectValue,
 } from '@/components/ui/select';
 import { cn } from '@/lib/utils';
-import type { PageLinkItem } from '@/pages/users';
+import type { Filters, PageLinkItem } from '@/pages/users';
 import type { RouteDefinition } from '@/wayfinder';
 
 interface DataTablePaginationProps {
     links: PageLinkItem[];
     route: RouteDefinition<'get'>;
+    filters: Filters;
     currentPage: string;
+    onCurrentPageChange: (value: string) => void;
 }
 
 export default function DataTablePagination({
     links,
     route,
+    filters,
     currentPage = '10',
+    onCurrentPageChange,
 }: DataTablePaginationProps) {
-    const [perPage, setPerPage] = useState(currentPage);
-
     const onPerPageChange = (value: string) => {
-        setPerPage(value);
+        onCurrentPageChange(value);
         router.get(
             route,
-            { perPage: value },
+            { ...filters, perPage: value },
             { preserveState: true, preserveScroll: true },
         );
     };
@@ -38,9 +39,9 @@ export default function DataTablePagination({
         <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
                 <Label>Per Page</Label>
-                <Select value={perPage} onValueChange={onPerPageChange}>
+                <Select value={currentPage} onValueChange={onPerPageChange}>
                     <SelectTrigger>
-                        <SelectValue placeholder={perPage} />
+                        <SelectValue placeholder={currentPage} />
                     </SelectTrigger>
                     <SelectContent>
                         <SelectItem value="10">10</SelectItem>

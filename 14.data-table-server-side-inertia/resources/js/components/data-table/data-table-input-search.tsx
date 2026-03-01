@@ -1,41 +1,41 @@
-import { router, useForm } from '@inertiajs/react';
+import { router } from '@inertiajs/react';
 import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import type { Filters } from '@/pages/users';
 import type { RouteDefinition } from '@/wayfinder';
 
 interface DataTableInputSearchProps {
-    initialValue?: string;
+    value: string;
+    onValueChange: (value: string) => void;
     route: RouteDefinition<'get'>;
+    filters: Filters;
     placeholder?: string;
 }
 
 export default function DataTableInputSearch({
-    initialValue,
+    value,
+    onValueChange,
     route,
+    filters,
     placeholder = 'Search...',
 }: DataTableInputSearchProps) {
     const [searchTimeout, setSearchTimeout] = useState<NodeJS.Timeout | null>(
         null,
     );
 
-    const { data, setData } = useForm({
-        search: initialValue || '',
-    });
-
     // Handle search input change
     const onChangeSearch = (e?: React.ChangeEvent<HTMLInputElement>) => {
         const inputSearch = e?.target.value ?? '';
-        setData('search', inputSearch);
+        onValueChange(inputSearch);
 
         if (searchTimeout) {
             clearTimeout(searchTimeout);
         }
 
         const newSearchTimeout = setTimeout(() => {
-            const queryString = inputSearch ? { search: inputSearch } : {};
-
+            const queryString = { ...filters, search: inputSearch };
             router.get(route, queryString, {
                 preserveState: true,
                 preserveScroll: true,
@@ -64,10 +64,10 @@ export default function DataTableInputSearch({
                         type="text"
                         name="search"
                         placeholder={placeholder}
-                        value={data.search}
+                        value={value}
                         onChange={onChangeSearch}
                     />
-                    {data.search && (
+                    {value && (
                         <Button
                             className="px-0 text-xs text-muted-foreground"
                             variant="link"
