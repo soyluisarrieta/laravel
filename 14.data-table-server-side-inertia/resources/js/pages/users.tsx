@@ -35,12 +35,16 @@ export interface PageLinkItem {
     url: string;
 }
 
-interface PageProps {
+interface UsersPaginated {
     data: User[];
     links: PageLinkItem[];
 }
 
-export default function Users({ users }: { users: PageProps }) {
+interface PageProps {
+    users: UsersPaginated;
+}
+
+export default function Users({ users }: PageProps) {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Users" />
