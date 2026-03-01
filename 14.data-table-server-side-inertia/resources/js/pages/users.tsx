@@ -11,6 +11,7 @@ import {
     TableRow,
 } from '@/components/ui/table';
 import AppLayout from '@/layouts/app-layout';
+import { formatDate } from '@/lib/utils';
 import { users as usersRoute } from '@/routes';
 import type { BreadcrumbItem } from '@/types';
 
@@ -91,7 +92,9 @@ export default function Users({ users, filters }: PageProps) {
                                             {user.name}
                                         </TableCell>
                                         <TableCell>{user.email}</TableCell>
-                                        <TableCell>{user.created_at}</TableCell>
+                                        <TableCell>
+                                            {formatDate(user.created_at)}
+                                        </TableCell>
                                         <TableCell>
                                             {user.email_verified_at ? (
                                                 <Badge variant="secondary">
