@@ -14,9 +14,11 @@ class UserController extends Controller
     public function index(Request $request)
     {
         $perPage = $request->perPage ?? 10;
+        $sortBy = $request->sortBy ?? 'created_at';
+        $sortOrder = $request->sortOrder ?? 'desc';
 
         $users = User::search($request->search)
-            ->latest()
+            ->orderBy($sortBy, $sortOrder)
             ->paginate($perPage)
             ->withQueryString();
 
@@ -24,7 +26,9 @@ class UserController extends Controller
             'users' => $users,
             'filters' => [
                 'search' => $request->search,
-                'perPage' => $perPage
+                'perPage' => $perPage,
+                'sortBy' => $sortBy,
+                'sortOrder' => $sortOrder
             ]
         ]);
     }

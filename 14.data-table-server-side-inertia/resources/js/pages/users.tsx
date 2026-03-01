@@ -1,6 +1,7 @@
 import { Head, useForm } from '@inertiajs/react';
 import InputSearch from '@/components/data-table/data-table-input-search';
 import Pagination from '@/components/data-table/data-table-pagination';
+import DataTableSortList from '@/components/data-table/data-table-sort-list';
 import { Badge } from '@/components/ui/badge';
 import {
     Table,
@@ -44,6 +45,8 @@ interface UsersPaginated {
 export interface Filters {
     search: string;
     perPage: number;
+    sortBy: string;
+    sortOrder: string;
 }
 
 interface PageProps {
@@ -55,6 +58,8 @@ export default function Users({ users, filters }: PageProps) {
     const { data, setData } = useForm({
         search: filters.search || '',
         perPage: filters.perPage,
+        sortBy: filters.sortBy,
+        sortOrder: filters.sortOrder,
     });
 
     return (
@@ -77,10 +82,32 @@ export default function Users({ users, filters }: PageProps) {
                                     className="pl-5"
                                     style={{ width: 100 }}
                                 >
-                                    Name
+                                    <DataTableSortList
+                                        filters={filters}
+                                        route={usersRoute()}
+                                        field="name"
+                                    >
+                                        Name
+                                    </DataTableSortList>
                                 </TableHead>
-                                <TableHead>Email</TableHead>
-                                <TableHead>Created At</TableHead>
+                                <TableHead>
+                                    <DataTableSortList
+                                        filters={filters}
+                                        route={usersRoute()}
+                                        field="email"
+                                    >
+                                        Email
+                                    </DataTableSortList>
+                                </TableHead>
+                                <TableHead>
+                                    <DataTableSortList
+                                        filters={filters}
+                                        route={usersRoute()}
+                                        field="created_at"
+                                    >
+                                        Created At
+                                    </DataTableSortList>
+                                </TableHead>
                                 <TableHead>Verified</TableHead>
                             </TableRow>
                         </TableHeader>
