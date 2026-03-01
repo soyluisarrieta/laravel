@@ -1,4 +1,5 @@
 import { Head, router, useForm } from '@inertiajs/react';
+import { useEffect, useState } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -53,20 +54,45 @@ interface PageProps {
 }
 
 export default function Users({ users, filters }: PageProps) {
+    const [searchTimeout, setSearchTimeout] = useState<NodeJS.Timeout | null>(
+        null,
+    );
+
+    // Clear timeout on unmount
+    useEffect(() => {
+        return () => {
+            if (searchTimeout) {
+                clearTimeout(searchTimeout);
+            }
+        };
+    }, [searchTimeout]);
+
+    // Form state
     const { data, setData } = useForm({
         search: filters.search || '',
     });
 
+    // Handle search input change
     const onChangeSearch = (e?: React.ChangeEvent<HTMLInputElement>) => {
         const inputSearch = e?.target.value ?? '';
         setData('search', inputSearch);
 
-        const queryString = inputSearch ? { search: inputSearch } : {};
+        // Clear previous timeout
+        if (searchTimeout) {
+            clearTimeout(searchTimeout);
+        }
 
-        router.get(usersRoute(), queryString, {
-            preserveState: true,
-            preserveScroll: true,
-        });
+        // Debounced request
+        const newSearchTimeout = setTimeout(() => {
+            const queryString = inputSearch ? { search: inputSearch } : {};
+
+            router.get(usersRoute(), queryString, {
+                preserveState: true,
+                preserveScroll: true,
+            });
+        }, 300);
+
+        setSearchTimeout(newSearchTimeout);
     };
 
     return (
