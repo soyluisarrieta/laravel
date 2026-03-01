@@ -54,8 +54,10 @@ class User extends Authenticatable
     public function scopeSearch(Builder $query, $value): void
     {
         if ($value) {
-            $query->where('name', 'LIKE', "%{$value}%")
-                ->orWhere('email', 'LIKE', "%{$value}%");
+            $query->where(function (Builder $query) use ($value) {
+                $query->where('name', 'LIKE', "%{$value}%")
+                    ->orWhere('email', 'LIKE', "%{$value}%");
+            });
         }
     }
 }
