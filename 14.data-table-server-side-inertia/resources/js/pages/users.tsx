@@ -43,17 +43,16 @@ interface UsersPaginated {
 }
 
 export interface Filters {
-    search: string;
-    perPage: number;
-    sortBy: string;
-    sortOrder: string;
+    search?: string;
+    perPage?: number | string;
+    sortBy?: string;
+    sortOrder?: string;
 }
 
 interface PageProps {
     users: UsersPaginated;
     filters: Filters;
 }
-
 export default function Users({ users, filters }: PageProps) {
     const { data, setData } = useForm({
         search: filters.search || '',
@@ -152,7 +151,7 @@ export default function Users({ users, filters }: PageProps) {
                         filters={filters}
                         route={usersRoute()}
                         links={users.links}
-                        currentPage={data.perPage.toString()}
+                        currentPage={(data.perPage || 10).toString()}
                         onCurrentPageChange={(value) =>
                             setData('perPage', Number(value))
                         }

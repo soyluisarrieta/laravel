@@ -4,7 +4,7 @@ import {
     ArrowDownWideNarrowIcon,
     ArrowUpWideNarrowIcon,
 } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { cn, cleanFilters } from '@/lib/utils';
 import type { Filters } from '@/pages/users';
 import type { RouteDefinition } from '@/wayfinder';
 
@@ -22,7 +22,7 @@ export default function DataTableSortList({
     children,
 }: DataTableSortListProps) {
     const isActived = filters.sortBy === field;
-    const isSortAsc = isActived && filters.sortOrder === 'asc';
+    const isSortAsc = isActived && (filters.sortOrder || 'desc') === 'asc';
 
     return (
         <>
@@ -32,11 +32,11 @@ export default function DataTableSortList({
                     isActived && 'text-primary',
                 )}
                 href={route}
-                data={{
+                data={cleanFilters({
                     ...filters,
                     sortBy: field,
                     sortOrder: isSortAsc ? 'desc' : 'asc',
-                }}
+                })}
             >
                 <div>{children}</div>
                 {isActived ? (

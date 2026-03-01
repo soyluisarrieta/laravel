@@ -18,3 +18,9 @@ export function formatDate(dateString: string): string {
     const year = date.getFullYear();
     return `${day}-${month}-${year}`;
 }
+
+export function cleanFilters(filters: Record<string, any>) {
+    return Object.fromEntries(
+        Object.entries(filters).filter(([, v]) => v !== '' && v != null),
+    );
+}

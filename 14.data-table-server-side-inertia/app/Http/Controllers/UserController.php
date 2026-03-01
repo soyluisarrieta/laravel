@@ -24,12 +24,7 @@ class UserController extends Controller
 
         return Inertia::render('users', [
             'users' => $users,
-            'filters' => [
-                'search' => $request->search,
-                'perPage' => $perPage,
-                'sortBy' => $sortBy,
-                'sortOrder' => $sortOrder
-            ]
+            'filters' => $request->only(['search', 'perPage', 'sortBy', 'sortOrder'])
         ]);
     }
 

@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { cleanFilters } from '@/lib/utils';
 import type { Filters } from '@/pages/users';
 import type { RouteDefinition } from '@/wayfinder';
 
@@ -35,8 +36,12 @@ export default function DataTableInputSearch({
         }
 
         const newSearchTimeout = setTimeout(() => {
-            const queryString = { ...filters, search: inputSearch };
-            router.get(route, queryString, {
+            const queryString = {
+                ...filters,
+                search: inputSearch,
+            };
+            const cleanQueryString = cleanFilters(queryString);
+            router.get(route, cleanQueryString, {
                 preserveState: true,
                 preserveScroll: true,
             });

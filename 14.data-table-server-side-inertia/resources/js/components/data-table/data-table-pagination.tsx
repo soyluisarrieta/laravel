@@ -7,7 +7,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select';
-import { cn } from '@/lib/utils';
+import { cn, cleanFilters } from '@/lib/utils';
 import type { Filters, PageLinkItem } from '@/pages/users';
 import type { RouteDefinition } from '@/wayfinder';
 
@@ -28,11 +28,12 @@ export default function DataTablePagination({
 }: DataTablePaginationProps) {
     const onPerPageChange = (value: string) => {
         onCurrentPageChange(value);
-        router.get(
-            route,
-            { ...filters, perPage: value },
-            { preserveState: true, preserveScroll: true },
-        );
+        const queryString = { ...filters, perPage: value };
+        const cleanQueryString = cleanFilters(queryString);
+        router.get(route, cleanQueryString, {
+            preserveState: true,
+            preserveScroll: true,
+        });
     };
 
     return (
