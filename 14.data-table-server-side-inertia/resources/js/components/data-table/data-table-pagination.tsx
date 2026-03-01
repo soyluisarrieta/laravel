@@ -1,12 +1,14 @@
-import { Link } from "@inertiajs/react";
-import { cn } from "@/lib/utils";
-import { PageLinkItem } from "@/pages/users";
+import { Link } from '@inertiajs/react';
+import { cn } from '@/lib/utils';
+import type { PageLinkItem } from '@/pages/users';
 
-interface PaginationProps {
+interface DataTablePaginationProps {
     links: PageLinkItem[];
 }
 
-export default function Pagination({ links }: PaginationProps) {
+export default function DataTablePagination({
+    links,
+}: DataTablePaginationProps) {
     return (
         <div className="flex items-center justify-center gap-0.5">
             {links.map((link, index) => (
@@ -26,5 +28,5 @@ export default function Pagination({ links }: PaginationProps) {
                 />
             ))}
         </div>
-    )
+    );
 }

@@ -1,10 +1,7 @@
-import { Head, router, useForm } from '@inertiajs/react';
-import { useEffect, useState } from 'react';
+import { Head } from '@inertiajs/react';
+import InputSearch from '@/components/data-table/data-table-input-search';
+import Pagination from '@/components/data-table/data-table-pagination';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import Pagination from '@/components/ui/pagination';
 import { Separator } from '@/components/ui/separator';
 import {
     Table,
@@ -54,76 +51,16 @@ interface PageProps {
 }
 
 export default function Users({ users, filters }: PageProps) {
-    const [searchTimeout, setSearchTimeout] = useState<NodeJS.Timeout | null>(
-        null,
-    );
-
-    // Clear timeout on unmount
-    useEffect(() => {
-        return () => {
-            if (searchTimeout) {
-                clearTimeout(searchTimeout);
-            }
-        };
-    }, [searchTimeout]);
-
-    // Form state
-    const { data, setData } = useForm({
-        search: filters.search || '',
-    });
-
-    // Handle search input change
-    const onChangeSearch = (e?: React.ChangeEvent<HTMLInputElement>) => {
-        const inputSearch = e?.target.value ?? '';
-        setData('search', inputSearch);
-
-        // Clear previous timeout
-        if (searchTimeout) {
-            clearTimeout(searchTimeout);
-        }
-
-        // Debounced request
-        const newSearchTimeout = setTimeout(() => {
-            const queryString = inputSearch ? { search: inputSearch } : {};
-
-            router.get(usersRoute(), queryString, {
-                preserveState: true,
-                preserveScroll: true,
-            });
-        }, 300);
-
-        setSearchTimeout(newSearchTimeout);
-    };
-
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Users" />
             <div className="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
                 <div className="w-full max-w-7xl self-center">
-                    <div className="flex w-full max-w-sm items-center space-x-2">
-                        <div className="grid gap-2">
-                            <Label htmlFor="search">Search</Label>
-                            <div className="flex items-center gap-2">
-                                <Input
-                                    id="search"
-                                    type="text"
-                                    name="search"
-                                    value={data.search}
-                                    onChange={onChangeSearch}
-                                />
-                                {data.search && (
-                                    <Button
-                                        className="px-0 text-xs text-muted-foreground"
-                                        variant="link"
-                                        size="sm"
-                                        onClick={() => onChangeSearch()}
-                                    >
-                                        Clear
-                                    </Button>
-                                )}
-                            </div>
-                        </div>
-                    </div>
+                    <InputSearch
+                        route={usersRoute()}
+                        initialValue={filters.search}
+                        placeholder="Search users..."
+                    />
                     <Table>
                         <TableHeader>
                             <TableRow className="border-0! [&>th]:bg-muted [&>th]:text-muted-foreground [&>th]:first:rounded-l-xl [&>th]:last:rounded-r-xl">
