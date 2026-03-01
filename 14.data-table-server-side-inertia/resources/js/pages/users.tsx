@@ -1,5 +1,7 @@
-import { Head, Link } from '@inertiajs/react';
+import { Head } from '@inertiajs/react';
 import { Badge } from '@/components/ui/badge';
+import Pagination from '@/components/ui/pagination';
+import { Separator } from '@/components/ui/separator';
 import {
     Table,
     TableBody,
@@ -9,7 +11,6 @@ import {
     TableRow,
 } from '@/components/ui/table';
 import AppLayout from '@/layouts/app-layout';
-import { cn } from '@/lib/utils';
 import { users } from '@/routes';
 import type { BreadcrumbItem } from '@/types';
 
@@ -28,7 +29,7 @@ interface User {
     email_verified_at: string | null;
 }
 
-interface PageLinkItem {
+export interface PageLinkItem {
     active: boolean;
     label: string;
     url: string;
@@ -93,25 +94,8 @@ export default function Users({ users }: { users: PageProps }) {
                             )}
                         </TableBody>
                     </Table>
-
-                    <div className="flex flex-wrap items-center justify-center gap-1 border-t pt-4">
-                        {users.links.map((link, index) => (
-                            <Link
-                                key={index}
-                                href={link.url ?? '#'}
-                                dangerouslySetInnerHTML={{ __html: link.label }}
-                                className={cn(
-                                    'rounded border px-3 py-1 text-sm',
-                                    link.active
-                                        ? 'bg-foreground text-background'
-                                        : 'bg-background text-foreground',
-                                    !link.url
-                                        ? 'pointer-events-none opacity-50'
-                                        : 'hover:bg-foreground/10',
-                                )}
-                            />
-                        ))}
-                    </div>
+                    <Separator className="mb-2" />
+                    <Pagination links={users.links} />
                 </div>
             </div>
         </AppLayout>
