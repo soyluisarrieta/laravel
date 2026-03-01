@@ -1,4 +1,4 @@
-import { Head } from '@inertiajs/react';
+import { Head, Link } from '@inertiajs/react';
 import { Badge } from '@/components/ui/badge';
 import {
     Table,
@@ -9,6 +9,7 @@ import {
     TableRow,
 } from '@/components/ui/table';
 import AppLayout from '@/layouts/app-layout';
+import { cn } from '@/lib/utils';
 import { users } from '@/routes';
 import type { BreadcrumbItem } from '@/types';
 
@@ -27,11 +28,18 @@ interface User {
     email_verified_at: string | null;
 }
 
-interface UsersProps {
-    users: User[];
+interface PageLinkItem {
+    active: boolean;
+    label: string;
+    url: string;
 }
 
-export default function Users({ users }: UsersProps) {
+interface PageProps {
+    data: User[];
+    links: PageLinkItem[];
+}
+
+export default function Users({ users }: { users: PageProps }) {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Users" />
@@ -41,7 +49,7 @@ export default function Users({ users }: UsersProps) {
                         <TableHeader>
                             <TableRow className="border-0! [&>th]:bg-muted [&>th]:text-muted-foreground [&>th]:first:rounded-l-xl [&>th]:last:rounded-r-xl">
                                 <TableHead
-                                    className="py-3 pl-5"
+                                    className="pl-5"
                                     style={{ width: 100 }}
                                 >
                                     Name
@@ -52,8 +60,8 @@ export default function Users({ users }: UsersProps) {
                             </TableRow>
                         </TableHeader>
                         <TableBody>
-                            {users.length > 0 ? (
-                                users.map((user) => (
+                            {users.data.length > 0 ? (
+                                users.data.map((user) => (
                                     <TableRow key={user.id}>
                                         <TableCell className="py-3 pl-5 font-medium">
                                             {user.name}
@@ -85,6 +93,25 @@ export default function Users({ users }: UsersProps) {
                             )}
                         </TableBody>
                     </Table>
+
+                    <div className="flex flex-wrap items-center justify-center gap-1 border-t pt-4">
+                        {users.links.map((link, index) => (
+                            <Link
+                                key={index}
+                                href={link.url ?? '#'}
+                                dangerouslySetInnerHTML={{ __html: link.label }}
+                                className={cn(
+                                    'rounded border px-3 py-1 text-sm',
+                                    link.active
+                                        ? 'bg-foreground text-background'
+                                        : 'bg-background text-foreground',
+                                    !link.url
+                                        ? 'pointer-events-none opacity-50'
+                                        : 'hover:bg-foreground/10',
+                                )}
+                            />
+                        ))}
+                    </div>
                 </div>
             </div>
         </AppLayout>

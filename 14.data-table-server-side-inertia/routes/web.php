@@ -14,7 +14,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('users', function () {
         return Inertia::render('users', [
-            'users' => User::latest()->get(),
+            'users' => User::latest()->paginate(10),
         ]);
     })->name('users');
 });
