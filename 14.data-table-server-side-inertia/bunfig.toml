@@ -1,0 +1,3 @@
+[install]
+# Equivalente a public-hoist-pattern[]=@inertiajs/core en .npmrc
+public-hoist-pattern = ["@inertiajs/core"]
