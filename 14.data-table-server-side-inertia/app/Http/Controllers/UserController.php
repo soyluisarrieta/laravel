@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -11,10 +12,21 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $users = User::when($request->search, function (Builder $query) use ($request) {
+            $query->where('name', 'LIKE', "%{$request->search}%")
+                ->orWhere('email', 'LIKE', "%{$request->search}%");
+        })
+            ->latest()
+            ->paginate(10)
+            ->withQueryString();
+
         return Inertia::render('users', [
-            'users' => User::latest()->paginate(10),
+            'users' => $users,
+            'filters' => [
+                'search' => $request->search
+            ]
         ]);
     }
 
