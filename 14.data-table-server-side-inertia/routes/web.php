@@ -1,6 +1,8 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
 use Laravel\Fortify\Features;
 
 Route::inertia('/', 'welcome', [
@@ -9,6 +11,12 @@ Route::inertia('/', 'welcome', [
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::inertia('dashboard', 'dashboard')->name('dashboard');
+
+    Route::get('users', function () {
+        return Inertia::render('users', [
+            'users' => User::latest()->get(),
+        ]);
+    })->name('users');
 });
 
-require __DIR__.'/settings.php';
+require __DIR__ . '/settings.php';
