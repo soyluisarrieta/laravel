@@ -2,10 +2,7 @@
 import DangerButton from '../DangerButton.vue'
 import PrimaryButton from '../PrimaryButton.vue'
 import SecondaryButton from '../SecondaryButton.vue'
-import dayjs from 'dayjs'
-import relativeTime from 'dayjs/plugin/relativeTime'
-
-dayjs.extend(relativeTime)
+import dayjs from '../../Utils/dayjs'
 
 defineProps({
   chatbot: {
