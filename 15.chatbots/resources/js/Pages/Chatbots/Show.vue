@@ -126,7 +126,10 @@ defineProps({
             </div>
           </section>
         </div>
-        <div class="mt-4 overflow-hidden rounded-lg shadow-lg">
+        <div
+          v-if="chatbot.knowledge_sources.length > 0"
+          class="mt-4 overflow-hidden rounded-lg shadow-lg"
+        >
           <section class="bg-white p-6 dark:border-gray-700 dark:bg-gray-800">
             <KnowledgedSourcesListItem
               :key="knowledgeSource.id"
