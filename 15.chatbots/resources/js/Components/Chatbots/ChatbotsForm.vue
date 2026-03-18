@@ -3,6 +3,7 @@ import InputError from '../InputError.vue'
 import InputLabel from '../InputLabel.vue'
 import TextInput from '../TextInput.vue'
 import TextArea from '../TextArea.vue'
+import SelectInput from '../SelectInput.vue'
 
 defineProps({
   form: {
@@ -29,7 +30,16 @@ defineProps({
   </div>
   <div class="col-span-6 sm:col-span-4">
     <InputLabel for="model" value="Modelo" />
-    <TextInput id="model" v-model="form.model" class="mt-1 block w-full" />
+    <SelectInput
+      id="model"
+      v-model="form.model"
+      class="mt-1 block w-full"
+      placeholder="Selecciona un modelo"
+      :options="[
+        { value: 'gpt-3.5-turbo', label: 'GPT-3.5 Turbo' },
+        { value: 'gpt-4', label: 'GPT-4' },
+      ]"
+    />
     <InputError :message="form.errors.model" class="mt-2" />
   </div>
   <div class="col-span-6 sm:col-span-4">
