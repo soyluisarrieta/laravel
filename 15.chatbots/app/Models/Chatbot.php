@@ -15,6 +15,8 @@ class Chatbot extends Model
 
     use HasUuids;
 
+    protected $guarded = [];
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

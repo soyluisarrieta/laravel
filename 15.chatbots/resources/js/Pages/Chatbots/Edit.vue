@@ -22,7 +22,9 @@ const form = useForm({
 })
 
 const handleSubmit = () => {
-  form.put(route('chatbots.update', props.chatbot.id))
+  form.put(route('chatbots.update', props.chatbot.id), {
+    preserveScroll: true,
+  })
 }
 </script>
 
@@ -53,14 +55,14 @@ const handleSubmit = () => {
             <ChatbotsForm :form="form" />
           </template>
           <template #actions>
-            <ActionMessage :on="false" class="me-3">
+            <ActionMessage :on="form.recentlySuccessful" class="me-3">
               Actualizado.
             </ActionMessage>
 
             <PrimaryButton
               aria-label="Guardar Chatbot"
-              :class="{ 'cursor-not-allowed opacity-50': false }"
-              :disabled="false"
+              :class="{ 'cursor-not-allowed opacity-50': form.processing }"
+              :disabled="form.processing"
             >
               Guardar
             </PrimaryButton>
