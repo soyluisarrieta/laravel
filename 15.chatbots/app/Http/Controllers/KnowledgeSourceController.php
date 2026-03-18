@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\SaveKnowledgeSourceRequest;
+use App\Models\Chatbot;
 use App\Models\KnowledgeSource;
 
 class KnowledgeSourceController extends Controller
@@ -26,9 +27,22 @@ class KnowledgeSourceController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(SaveKnowledgeSourceRequest $request)
+    public function store(Chatbot $chatbot, SaveKnowledgeSourceRequest $request)
     {
-        //
+        $validated = $request->validated();
+
+        $knowledgeSource = new KnowledgeSource([
+            'name' => $validated['name'],
+            'type' => $validated['type'],
+        ]);
+
+        $knowledgeSource->path = $validated['type'] === 'pdf'
+            ? $validated['pdf']->store('pdfs')
+            : $validated['website'];
+
+        $chatbot->knowledgeSources()->save($knowledgeSource);
+
+        return back();
     }
 
     /**
