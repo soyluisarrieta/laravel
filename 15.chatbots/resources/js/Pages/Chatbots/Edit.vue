@@ -1,11 +1,12 @@
 <script setup>
-import { Link, useForm } from '@inertiajs/vue3'
+import { Link } from '@inertiajs/vue3'
 import { ArrowUturnLeftIcon } from '@heroicons/vue/24/solid'
 import AppLayout from '@/Layouts/AppLayout.vue'
 import FormSection from '@/Components/FormSection.vue'
 import PrimaryButton from '@/Components/PrimaryButton.vue'
 import ActionMessage from '@/Components/ActionMessage.vue'
 import ChatbotsForm from '@/Components/Chatbots/ChatbotsForm.vue'
+import { createform, update } from '@/Forms/chatbot'
 
 const props = defineProps({
   chatbot: {
@@ -14,17 +15,10 @@ const props = defineProps({
   },
 })
 
-const form = useForm({
-  name: props.chatbot.name || '',
-  system_prompt: props.chatbot.system_prompt || '',
-  model: props.chatbot.model || '',
-  temperature: String(props.chatbot.temperature) || '0.7',
-})
+const form = createform(props.chatbot)
 
 const handleSubmit = () => {
-  form.put(route('chatbots.update', props.chatbot.id), {
-    preserveScroll: true,
-  })
+  update(form, props.chatbot.id)
 }
 </script>
 
