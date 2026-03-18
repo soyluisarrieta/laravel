@@ -24,7 +24,9 @@ class ChatbotController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Chatbots/Create', [
+            'chatbot' => new Chatbot,
+        ]);
     }
 
     /**
@@ -32,7 +34,12 @@ class ChatbotController extends Controller
      */
     public function store(SaveChatbotRequest $request)
     {
-        //
+        $chatbot = $request
+            ->user()
+            ->chatbots()
+            ->create($request->validated());
+
+        return to_route('chatbots.index', $chatbot);
     }
 
     /**

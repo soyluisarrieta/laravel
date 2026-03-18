@@ -1,6 +1,8 @@
 <script setup>
 import ChatbotsListItem from '@/Components/Chatbots/ChatbotsListItem.vue'
+import PrimaryButton from '@/Components/PrimaryButton.vue'
 import AppLayout from '@/Layouts/AppLayout.vue'
+import { PlusIcon } from '@heroicons/vue/24/outline'
 
 defineProps({
   chatbots: {
@@ -13,11 +15,20 @@ defineProps({
 <template>
   <AppLayout title="Listado de Chatbots">
     <template #header>
-      <h1
-        class="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200"
-      >
-        Chatbots
-      </h1>
+      <div class="flex items-center justify-between">
+        <h1
+          class="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200"
+        >
+          Chatbots
+        </h1>
+        <PrimaryButton
+          aria-label="Crear Chatbot"
+          :href="route('chatbots.create')"
+        >
+          <PlusIcon class="size-4" />
+          <span>Crear Chatbot</span>
+        </PrimaryButton>
+      </div>
     </template>
 
     <section class="py-12" aria-label="Chatbots List">
