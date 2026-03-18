@@ -1,4 +1,5 @@
 <script setup>
+import FileInput from '../FileInput.vue'
 import InputError from '../InputError.vue'
 import InputLabel from '../InputLabel.vue'
 import SelectInput from '../SelectInput.vue'
@@ -36,10 +37,10 @@ const sourceTypes = [
     </div>
     <div v-if="form.type === 'pdf'" class="col-span-6 sm:col-span-4">
       <InputLabel for="pdf" value="PDF" />
-      <input
+      <FileInput
         id="pdf"
-        type="file"
-        @input="form.pdf = $event.target.files[0]"
+        v-model="form.pdf"
+        accept="application/pdf"
         class="mt-1 block w-full"
       />
       <InputError :message="form.errors.pdf" class="mt-2" />
