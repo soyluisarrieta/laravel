@@ -1,8 +1,8 @@
 <script setup>
-import DangerButton from '../DangerButton.vue'
-import PrimaryButton from '../PrimaryButton.vue'
-import SecondaryButton from '../SecondaryButton.vue'
-import dayjs from '../../Utils/dayjs'
+import PrimaryButton from '@/Components/PrimaryButton.vue'
+import SecondaryButton from '@/Components/SecondaryButton.vue'
+import DangerButton from '@/Components/DangerButton.vue'
+import dayjs from '@/Utils/dayjs'
 
 defineProps({
   chatbot: {
@@ -14,20 +14,26 @@ defineProps({
 
 <template>
   <section
-    class="border-gray-200 p-5 text-gray-800 dark:border-gray-700 dark:text-gray-200"
+    class="border-gray-200 p-5 dark:border-gray-700"
     :aria-label="chatbot.name"
   >
     <div class="flex flex-col md:flex-row md:items-center md:justify-between">
       <div>
-        <div>{{ chatbot.name }}</div>
+        <div class="text-gray-800 dark:text-gray-200">
+          {{ chatbot.name }}
+        </div>
         <div class="text-sm text-gray-500 dark:text-gray-400">
           {{ dayjs(chatbot.created_at).fromNow() }}
         </div>
       </div>
       <div class="mt-4 flex space-x-2 md:mt-0">
-        <PrimaryButton>View</PrimaryButton>
-        <SecondaryButton>Edit</SecondaryButton>
-        <DangerButton>Delete</DangerButton>
+        <PrimaryButton href="/chatbots/1" aria-label="View Chatbot">
+          Ver
+        </PrimaryButton>
+        <SecondaryButton href="/chatbots/1/edit" aria-label="Edit Chatbot">
+          Editar
+        </SecondaryButton>
+        <DangerButton aria-label="Delete Chatbot"> Eliminar </DangerButton>
       </div>
     </div>
   </section>
