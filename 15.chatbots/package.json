@@ -16,6 +16,7 @@
     "autoprefixer": "^10.4.16",
     "axios": "^1.11.0",
     "concurrently": "^9.0.1",
+    "dayjs": "^1.11.20",
     "laravel-vite-plugin": "^2.0.0",
     "postcss": "^8.4.32",
     "prettier": "^3.8.1",
