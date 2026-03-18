@@ -5,15 +5,19 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreChatbotRequest;
 use App\Http\Requests\UpdateChatbotRequest;
 use App\Models\Chatbot;
+use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class ChatbotController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return 'chatbots index';
+        return Inertia::render('Chatbots/Index', [
+            'chatbots' => $request->user()->chatbots,
+        ]);
     }
 
     /**
