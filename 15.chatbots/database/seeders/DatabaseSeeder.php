@@ -16,8 +16,8 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->withPersonalTeam()->create();
 
         User::factory()->withPersonalTeam()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+            'name' => 'Luis Arrieta',
+            'email' => 'luisarrieta796@gmail.com',
         ]);
     }
 }
