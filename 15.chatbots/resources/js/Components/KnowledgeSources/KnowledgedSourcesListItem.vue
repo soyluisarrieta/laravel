@@ -6,6 +6,7 @@ import {
   CheckIcon,
   XMarkIcon,
 } from '@heroicons/vue/24/solid'
+import KnowledgeSourcesDeleteForm from './KnowledgeSourcesDeleteForm.vue'
 
 defineProps({
   knowledgeSource: Object,
@@ -43,7 +44,9 @@ defineProps({
       {{ dayjs(knowledgeSource.created_at).format('DD-MMM-YYYY') }}
     </div>
     <div class="col-span-1">
-      <XMarkIcon class="size-4 text-red-500" />
+      <KnowledgeSourcesDeleteForm :knowledge-source="knowledgeSource">
+        <XMarkIcon class="size-4 text-red-500" />
+      </KnowledgeSourcesDeleteForm>
     </div>
   </div>
 </template>

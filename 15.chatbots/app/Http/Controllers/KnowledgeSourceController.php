@@ -84,8 +84,22 @@ class KnowledgeSourceController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(KnowledgeSource $knowledgeSource)
+    public function destroy(Chatbot $chatbot, KnowledgeSource $knowledgeSource)
     {
-        //
+
+        $deleted = $knowledgeSource->delete();
+
+        if (! $deleted) {
+            return back()->withErrors([
+                'banner' => 'Error al eliminar la fuente de conocimiento.',
+                'bannerStyle' => 'danger',
+            ]);
+        }
+
+        if ($knowledgeSource->type === 'pdf') {
+            Storage::delete($knowledgeSource->path);
+        }
+
+        return back()->with('flash.banner', 'Fuente de conocimiento eliminada correctamente.');
     }
 }
