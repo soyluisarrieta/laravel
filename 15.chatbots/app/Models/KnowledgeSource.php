@@ -15,6 +15,8 @@ class KnowledgeSource extends Model
 
     use HasUuids;
 
+    protected $guarded = [];
+
     public function chatbot(): BelongsTo
     {
         return $this->belongsTo(Chatbot::class);

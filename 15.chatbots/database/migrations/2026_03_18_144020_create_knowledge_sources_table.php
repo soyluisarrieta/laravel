@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('knowledge_sources', function (Blueprint $table) {
-            $table->uuid()->primary();
+            $table->uuid('id')->primary();
             $table->foreignUuid('chatbot_id')->constrained()->cascadeOnDelete();
             $table->string('name');
             $table->string('type');
