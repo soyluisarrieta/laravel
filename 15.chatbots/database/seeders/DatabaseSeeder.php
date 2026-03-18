@@ -15,9 +15,12 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->withPersonalTeam()->create();
 
-        User::factory()->withPersonalTeam()->create([
-            'name' => 'Luis Arrieta',
-            'email' => 'luisarrieta796@gmail.com',
-        ]);
+        User::factory()
+            ->withPersonalTeam()
+            ->hasChatbots(2)
+            ->create([
+                'name' => 'Luis Arrieta',
+                'email' => 'luisarrieta796@gmail.com',
+            ]);
     }
 }
