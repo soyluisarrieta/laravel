@@ -1,4 +1,5 @@
 <script setup>
+import ChatbotsListItem from '@/Components/Chatbots/ChatbotsListItem.vue'
 import AppLayout from '@/Layouts/AppLayout.vue'
 
 defineProps({
@@ -24,9 +25,11 @@ defineProps({
         <div
           class="overflow-hidden bg-white shadow-xl sm:rounded-lg dark:bg-gray-800"
         >
-          <div v-for="chatbot in chatbots" :key="chatbot.id">
-            {{ chatbot.name }}
-          </div>
+          <ChatbotsListItem
+            v-for="chatbot in chatbots"
+            :key="chatbot.id"
+            :chatbot="chatbot"
+          />
         </div>
       </div>
     </section>
