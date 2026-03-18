@@ -130,9 +130,7 @@ const closeModal = () => {
           </section>
         </div>
       </div>
-      <KnowledgeSourcesModal :show="showModal" @close="showModal = false">
-        <p>Contenido del modal</p>
-      </KnowledgeSourcesModal>
+      <KnowledgeSourcesModal :show="showModal" @close="showModal = false" />
     </section>
   </AppLayout>
 </template>

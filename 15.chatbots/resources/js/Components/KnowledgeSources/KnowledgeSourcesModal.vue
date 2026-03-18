@@ -1,5 +1,7 @@
 <script setup>
+import { useForm } from '@inertiajs/vue3'
 import DialogModal from '../DialogModal.vue'
+import KnowledgeSourcesForm from './KnowledgeSourcesForm.vue'
 
 const emit = defineEmits(['close'])
 
@@ -10,16 +12,19 @@ defineProps({
   },
 })
 
-const closeModal = () => {
-  emit('close')
-}
+const form = useForm({
+  name: '',
+  type: 'pdf',
+  pdf: null,
+  website: '',
+})
 </script>
 
 <template>
-  <DialogModal :show="show" @close="closeModal">
+  <DialogModal :show="show" @close="emit('close')">
     <template #title> Fuentes de Conocimiento </template>
     <template #content>
-      <p>Contenido del modal</p>
+      <KnowledgeSourcesForm :form="form" />
     </template>
     <template #footer> botones </template>
   </DialogModal>
