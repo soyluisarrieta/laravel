@@ -2,12 +2,18 @@
 import { useForm } from '@inertiajs/vue3'
 import DialogModal from '../DialogModal.vue'
 import KnowledgeSourcesForm from './KnowledgeSourcesForm.vue'
+import SecondaryButton from '../SecondaryButton.vue'
+import PrimaryButton from '../PrimaryButton.vue'
 
 const emit = defineEmits(['close'])
 
-defineProps({
+const props = defineProps({
   show: {
     type: Boolean,
+    required: true,
+  },
+  chatbotId: {
+    type: String,
     required: true,
   },
 })
@@ -18,6 +24,17 @@ const form = useForm({
   pdf: null,
   website: '',
 })
+
+const handleSubmit = () => {
+  form.post(
+    route('chatbots.knowledge-sources.store', { chatbot: props.chatbotId }),
+    {
+      onSuccess: () => {
+        emit('close')
+      },
+    }
+  )
+}
 </script>
 
 <template>
@@ -26,6 +43,11 @@ const form = useForm({
     <template #content>
       <KnowledgeSourcesForm :form="form" />
     </template>
-    <template #footer> botones </template>
+    <template #footer>
+      <div class="flex w-full items-center justify-between">
+        <SecondaryButton @click="emit('close')">Cerrar</SecondaryButton>
+        <PrimaryButton @click="handleSubmit">Guardar</PrimaryButton>
+      </div>
+    </template>
   </DialogModal>
 </template>

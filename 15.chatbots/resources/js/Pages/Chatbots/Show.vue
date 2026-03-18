@@ -23,10 +23,6 @@ defineProps({
     required: true,
   },
 })
-
-const closeModal = () => {
-  showModal.value = false
-}
 </script>
 
 <template>
@@ -130,7 +126,11 @@ const closeModal = () => {
           </section>
         </div>
       </div>
-      <KnowledgeSourcesModal :show="showModal" @close="showModal = false" />
+      <KnowledgeSourcesModal
+        :show="showModal"
+        :chatbot-id="chatbot.id"
+        @close="showModal = false"
+      />
     </section>
   </AppLayout>
 </template>
