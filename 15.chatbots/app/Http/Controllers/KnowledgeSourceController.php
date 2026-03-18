@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SaveKnowledgeSourceRequest;
 use App\Models\KnowledgeSource;
-use App\Http\Requests\StoreKnowledgeSourceRequest;
-use App\Http\Requests\UpdateKnowledgeSourceRequest;
 
 class KnowledgeSourceController extends Controller
 {
@@ -27,7 +26,7 @@ class KnowledgeSourceController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreKnowledgeSourceRequest $request)
+    public function store(SaveKnowledgeSourceRequest $request)
     {
         //
     }
@@ -51,7 +50,7 @@ class KnowledgeSourceController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateKnowledgeSourceRequest $request, KnowledgeSource $knowledgeSource)
+    public function update(SaveKnowledgeSourceRequest $request, KnowledgeSource $knowledgeSource)
     {
         //
     }
