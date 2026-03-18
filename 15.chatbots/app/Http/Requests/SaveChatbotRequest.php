@@ -5,14 +5,14 @@ namespace App\Http\Requests;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateChatbotRequest extends FormRequest
+class SaveChatbotRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,7 +23,10 @@ class UpdateChatbotRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => ['required', 'string', 'max:255'],
+            'system_prompt' => ['required', 'string', 'max:1000'],
+            'model' => ['required', 'string', 'max:255'],
+            'temperature' => ['required', 'numeric', 'between:0,1'],
         ];
     }
 }

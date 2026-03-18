@@ -1,4 +1,5 @@
 <script setup>
+import InputError from '../InputError.vue'
 import InputLabel from '../InputLabel.vue'
 import TextInput from '../TextInput.vue'
 
@@ -14,6 +15,7 @@ defineProps({
   <div class="col-span-6 sm:col-span-4">
     <InputLabel for="name" value="Nombre" />
     <TextInput id="name" v-model="form.name" class="mt-1 block w-full" />
+    <InputError :message="form.errors.name" class="mt-2" />
   </div>
   <div class="col-span-6 sm:col-span-4">
     <InputLabel for="system_prompt" value="Prompt del Sistema" />
@@ -22,10 +24,12 @@ defineProps({
       v-model="form.system_prompt"
       class="mt-1 block w-full"
     />
+    <InputError :message="form.errors.system_prompt" class="mt-2" />
   </div>
   <div class="col-span-6 sm:col-span-4">
     <InputLabel for="model" value="Modelo" />
     <TextInput id="model" v-model="form.model" class="mt-1 block w-full" />
+    <InputError :message="form.errors.model" class="mt-2" />
   </div>
   <div class="col-span-6 sm:col-span-4">
     <InputLabel for="temperature" value="Temperatura" />
@@ -38,5 +42,6 @@ defineProps({
       v-model="form.temperature"
       class="mt-1 block w-full"
     />
+    <InputError :message="form.errors.temperature" class="mt-2" />
   </div>
 </template>
