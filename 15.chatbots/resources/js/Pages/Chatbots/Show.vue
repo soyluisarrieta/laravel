@@ -12,6 +12,7 @@ import { ref } from 'vue'
 import AppLayout from '@/Layouts/AppLayout.vue'
 import dayjs from '@/Utils/dayjs'
 import KnowledgeSourcesModal from '@/Components/KnowledgeSources/KnowledgeSourcesModal.vue'
+import KnowledgedSourcesListItems from '@/Components/KnowledgeSources/KnowledgedSourcesListItems.vue'
 
 const showModal = ref(false)
 
@@ -123,6 +124,14 @@ defineProps({
                 </PrimaryButton>
               </div>
             </div>
+          </section>
+        </div>
+        <div class="mt-4 overflow-hidden rounded-lg shadow-lg">
+          <section class="bg-white p-6 dark:border-gray-700 dark:bg-gray-800">
+            <KnowledgedSourcesListItems
+              v-for="knowledgeSource in chatbot.knowledge_sources"
+              :knowledge-source="knowledgeSource"
+            />
           </section>
         </div>
       </div>
