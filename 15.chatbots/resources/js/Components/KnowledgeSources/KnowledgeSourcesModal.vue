@@ -29,8 +29,11 @@ const handleSubmit = () => {
   form.post(
     route('chatbots.knowledge-sources.store', { chatbot: props.chatbotId }),
     {
+      forceFormData: true,
+      preserveScroll: true,
       onSuccess: () => {
         emit('close')
+        form.reset()
       },
     }
   )

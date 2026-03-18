@@ -36,10 +36,10 @@ const sourceTypes = [
     </div>
     <div v-if="form.type === 'pdf'" class="col-span-6 sm:col-span-4">
       <InputLabel for="pdf" value="PDF" />
-      <TextInput
+      <input
         id="pdf"
         type="file"
-        v-model="form.pdf"
+        @input="form.pdf = $event.target.files[0]"
         class="mt-1 block w-full"
       />
       <InputError :message="form.errors.pdf" class="mt-2" />
