@@ -62,7 +62,7 @@ const logout = () => {
                 </NavLink>
                 <NavLink
                   :href="route('chatbots.index')"
-                  :active="route().current('chatbots.index')"
+                  :active="route().current('chatbots.*')"
                 >
                   Chatbots
                 </NavLink>
@@ -303,7 +303,7 @@ const logout = () => {
             </ResponsiveNavLink>
             <ResponsiveNavLink
               :href="route('chatbots.index')"
-              :active="route().current('chatbots.index')"
+              :active="route().current('chatbots.*')"
             >
               Chatbots
             </ResponsiveNavLink>
