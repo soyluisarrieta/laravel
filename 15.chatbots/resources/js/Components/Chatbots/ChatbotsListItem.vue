@@ -28,7 +28,10 @@ defineProps({
         </div>
       </div>
       <div class="mt-4 flex space-x-2 md:mt-0">
-        <PrimaryButton href="/chatbots/1" aria-label="View Chatbot">
+        <PrimaryButton
+          :href="route('chatbots.show', chatbot.id)"
+          aria-label="View Chatbot"
+        >
           <EyeIcon class="size-4" />
           <span>Ver</span>
         </PrimaryButton>

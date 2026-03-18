@@ -11,13 +11,13 @@ defineProps({
 </script>
 
 <template>
-  <AppLayout title="Chatbots">
+  <AppLayout title="Listado de Chatbots">
     <template #header>
-      <h2
+      <h1
         class="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200"
       >
         Chatbots
-      </h2>
+      </h1>
     </template>
 
     <section class="py-12" aria-label="Chatbots List">
