@@ -51,7 +51,9 @@ class ChatbotController extends Controller
      */
     public function edit(Chatbot $chatbot)
     {
-        //
+        return Inertia::render('Chatbots/Edit', [
+            'chatbot' => $chatbot,
+        ]);
     }
 
     /**
