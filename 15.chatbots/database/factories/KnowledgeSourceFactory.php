@@ -18,7 +18,13 @@ class KnowledgeSourceFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'name' => fake()->sentence(),
+            'type' => $type = fake()->randomElement(['pdf', 'website']),
+            'path' => match ($type) {
+                'pdf' => fake()->filePath(),
+                'website' => fake()->url(),
+            },
+            'extracted_content' => fake()->paragraph(3, true),
         ];
     }
 }

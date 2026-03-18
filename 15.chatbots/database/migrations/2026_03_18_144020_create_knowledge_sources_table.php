@@ -12,7 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('knowledge_sources', function (Blueprint $table) {
-            $table->id();
+            $table->uuid()->primary();
+            $table->foreignUuid('chatbot_id')->constrained()->cascadeOnDelete();
+            $table->string('name');
+            $table->string('type');
+            $table->string('path');
+            $table->text('extracted_content')->nullable();
             $table->timestamps();
         });
     }
