@@ -4,12 +4,14 @@ import {
   PencilIcon,
   ArrowUturnLeftIcon,
   ChatBubbleBottomCenterIcon,
+  BookOpenIcon,
 } from '@heroicons/vue/24/solid'
 import SecondaryButton from '@/Components/SecondaryButton.vue'
 import PrimaryButton from '@/Components/PrimaryButton.vue'
 import { ref } from 'vue'
 import AppLayout from '@/Layouts/AppLayout.vue'
 import dayjs from '@/Utils/dayjs'
+import KnowledgeSourcesModal from '@/Components/KnowledgeSources/KnowledgeSourcesModal.vue'
 
 const showModal = ref(false)
 
@@ -21,6 +23,10 @@ defineProps({
     required: true,
   },
 })
+
+const closeModal = () => {
+  showModal.value = false
+}
 </script>
 
 <template>
@@ -108,15 +114,25 @@ defineProps({
                   <PencilIcon class="size-3"></PencilIcon>
                   <span>Editar</span>
                 </SecondaryButton>
-                <PrimaryButton href="#" aria-label="Chat with Chatbot">
+                <PrimaryButton aria-label="Chat with Chatbot">
                   <ChatBubbleBottomCenterIcon class="size-3" />
                   <span>Chat</span>
+                </PrimaryButton>
+                <PrimaryButton
+                  aria-label="Chat with Chatbot"
+                  @click="showModal = true"
+                >
+                  <BookOpenIcon class="size-3" />
+                  <span>Conocimiento</span>
                 </PrimaryButton>
               </div>
             </div>
           </section>
         </div>
       </div>
+      <KnowledgeSourcesModal :show="showModal" @close="showModal = false">
+        <p>Contenido del modal</p>
+      </KnowledgeSourcesModal>
     </section>
   </AppLayout>
 </template>
