@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Chatbot;
 use App\Http\Requests\StoreChatbotRequest;
 use App\Http\Requests\UpdateChatbotRequest;
+use App\Models\Chatbot;
 
 class ChatbotController extends Controller
 {
@@ -13,7 +13,7 @@ class ChatbotController extends Controller
      */
     public function index()
     {
-        //
+        return 'chatbots index';
     }
 
     /**
