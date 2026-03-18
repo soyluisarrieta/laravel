@@ -20,7 +20,13 @@ defineProps({
     <div class="col-span-3">
       <a
         class="flex items-center space-x-2 underline underline-offset-4"
-        href="#"
+        target="__blank"
+        :href="
+          route('chatbots.knowledge-sources.show', {
+            chatbot: knowledgeSource.chatbot_id,
+            knowledge_source: knowledgeSource.id,
+          })
+        "
       >
         <span>{{ knowledgeSource.type }}</span>
         <ArrowTopRightOnSquareIcon class="size-4" />

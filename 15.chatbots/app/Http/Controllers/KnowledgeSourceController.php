@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\SaveKnowledgeSourceRequest;
 use App\Models\Chatbot;
 use App\Models\KnowledgeSource;
+use Illuminate\Support\Facades\Storage;
 
 class KnowledgeSourceController extends Controller
 {
@@ -48,9 +49,20 @@ class KnowledgeSourceController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(KnowledgeSource $knowledgeSource)
+    public function show(Chatbot $chatbot, KnowledgeSource $knowledgeSource)
     {
-        //
+        if ($knowledgeSource->type === 'pdf') {
+            return Storage::response(
+                $knowledgeSource->path,
+                $knowledgeSource->name,
+                [
+                    'Content-Type' => 'application/pdf',
+                    'Content-Disposition' => 'inline',
+                ]
+            );
+        }
+
+        return redirect($knowledgeSource->path);
     }
 
     /**
