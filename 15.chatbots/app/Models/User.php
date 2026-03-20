@@ -76,4 +76,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Chatbot::class);
     }
+
+    public function chats(): HasMany
+    {
+        return $this->hasMany(Chat::class);
+    }
 }

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ChatbotController;
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\KnowledgeSourceController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -27,4 +28,6 @@ Route::middleware([
     Route::resource('chatbots', ChatbotController::class);
 
     Route::resource('chatbots.knowledge-sources', KnowledgeSourceController::class);
+
+    Route::resource('chats', ChatController::class)->only(['store', 'edit', 'update']);
 });
