@@ -13,6 +13,7 @@
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.10.1",
         "smalot/pdfparser": "^2.12",
+        "symfony/dom-crawler": "^8.0",
         "tightenco/ziggy": "^2.0"
     },
     "require-dev": {
