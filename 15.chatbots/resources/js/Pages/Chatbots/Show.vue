@@ -111,7 +111,11 @@ defineProps({
                   <PencilIcon class="size-3"></PencilIcon>
                   <span>Editar</span>
                 </SecondaryButton>
-                <PrimaryButton aria-label="Chat with Chatbot">
+                <PrimaryButton
+                  method="POST"
+                  :href="route('chats.store', { chatbot_id: chatbot.id })"
+                  aria-label="Chat with Chatbot"
+                >
                   <ChatBubbleBottomCenterIcon class="size-3" />
                   <span>Chat</span>
                 </PrimaryButton>

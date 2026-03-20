@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SaveChatRequest;
 use App\Models\Chat;
-use App\Http\Requests\StoreChatRequest;
-use App\Http\Requests\UpdateChatRequest;
+use Inertia\Inertia;
 
 class ChatController extends Controller
 {
@@ -27,9 +27,14 @@ class ChatController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreChatRequest $request)
+    public function store(SaveChatRequest $request)
     {
-        //
+        $chat = $request->user()->chats()->create([
+            'name' => 'New Chat',
+            'chatbot_id' => $request->chatbot_id,
+        ]);
+
+        return to_route('chats.edit', $chat);
     }
 
     /**
@@ -45,15 +50,21 @@ class ChatController extends Controller
      */
     public function edit(Chat $chat)
     {
-        //
+        return Inertia::render('Chats/Edit', [
+            'chat' => $chat,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateChatRequest $request, Chat $chat)
+    public function update(SaveChatRequest $request, Chat $chat)
     {
-        //
+        $request->validate(['name' => ['required']]);
+
+        $chat->update(['name' => $request->name]);
+
+        return to_route('chats.edit', $chat);
     }
 
     /**
