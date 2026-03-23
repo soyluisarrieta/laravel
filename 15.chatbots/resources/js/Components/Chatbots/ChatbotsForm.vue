@@ -10,6 +10,10 @@ defineProps({
     type: Object,
     required: true,
   },
+  models: {
+    type: Array,
+    required: true,
+  },
 })
 </script>
 
@@ -35,11 +39,7 @@ defineProps({
       v-model="form.model"
       class="mt-1 block w-full"
       placeholder="Selecciona un modelo"
-      :options="[
-        { value: 'mistral-small-latest', label: 'Mistral Small' },
-        { value: 'mistral-medium-latest', label: 'Mistral Medium' },
-        { value: 'mistral-large-latest', label: 'Mistral Large' },
-      ]"
+      :options="models"
     />
     <InputError :message="form.errors.model" class="mt-2" />
   </div>

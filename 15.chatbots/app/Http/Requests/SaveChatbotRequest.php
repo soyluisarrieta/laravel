@@ -2,8 +2,10 @@
 
 namespace App\Http\Requests;
 
+use App\Enums\Mistral;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class SaveChatbotRequest extends FormRequest
 {
@@ -25,7 +27,7 @@ class SaveChatbotRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:255'],
             'system_prompt' => ['required', 'string', 'max:1000'],
-            'model' => ['required', 'string', 'max:255'],
+            'model' => ['required', 'string', Rule::enum(Mistral::class)],
             'temperature' => ['required', 'numeric', 'between:0,1'],
         ];
     }
