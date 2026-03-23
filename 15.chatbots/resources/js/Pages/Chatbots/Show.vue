@@ -48,9 +48,7 @@ defineProps({
         </Link>
         <div class="overflow-hidden rounded-lg shadow-lg">
           <section class="bg-white p-6 dark:border-gray-700 dark:bg-gray-800">
-            <div
-              class="flex flex-col md:flex-row md:items-center md:justify-between"
-            >
+            <div class="flex flex-col md:items-end md:gap-4">
               <!-- Información principal del chatbot -->
               <div class="space-y-4">
                 <h2
@@ -112,6 +110,7 @@ defineProps({
                   <span>Editar</span>
                 </SecondaryButton>
                 <PrimaryButton
+                  v-if="chatbot.knowledge_sources.length > 0"
                   :href="route('chats.index', { chatbot: chatbot.id })"
                   aria-label="Chats"
                 >

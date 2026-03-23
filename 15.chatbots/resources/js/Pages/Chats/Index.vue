@@ -46,6 +46,7 @@ defineProps({
         <div class="overflow-hidden rounded-lg shadow-lg">
           <section class="bg-white p-6 dark:border-gray-700 dark:bg-gray-800">
             <div
+              v-if="chats.length > 0"
               class="grid grid-cols-12 gap-3 p-2 even:bg-gray-100/30 hover:bg-gray-100 dark:even:bg-gray-900/30 dark:hover:bg-gray-900"
               v-for="chat in chats"
               :key="chat.id"
@@ -77,6 +78,16 @@ defineProps({
                   <TrashIcon class="size-4 text-red-600" />
                 </Link>
               </div>
+            </div>
+            <div class="flex items-center justify-center" v-else>
+              <PrimaryButton
+                method="POST"
+                :href="route('chats.store', { chatbot_id: chatbot.id })"
+                aria-label="Crear chat"
+              >
+                <ChatBubbleBottomCenterIcon class="size-3" />
+                <span>Empieza tu primer chat</span>
+              </PrimaryButton>
             </div>
           </section>
         </div>
