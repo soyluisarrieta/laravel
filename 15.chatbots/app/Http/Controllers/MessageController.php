@@ -37,12 +37,25 @@ class MessageController extends Controller
             'content' => $request->message,
         ]);
 
+        $chatbot = $chat->chatbot;
+
+        $systemPrompt = $chatbot->system_prompt;
+        $systemPrompt .= "\n\n";
+        $systemPrompt .= $chatbot->knowledgeSources
+            ->pluck('extracted_content')
+            ->join('\n\n');
+
         $response = Prism::text()
-            ->using(Provider::Mistral, 'mistral-small-latest')
+            ->using(Provider::Mistral, $chatbot->model)
+            ->withSystemPrompt($chatbot->system_prompt)
+            ->usingTemperature($chatbot->temperature)
             ->withPrompt($request->message)
             ->asText();
 
-        dd($response);
+        $chat->messages()->create([
+            'role' => 'assistant',
+            'content' => $response->text,
+        ]);
 
         return back();
     }
