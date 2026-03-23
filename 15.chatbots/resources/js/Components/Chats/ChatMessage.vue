@@ -21,7 +21,8 @@ const isUser = props.message.role === 'user'
             : 'rounded-tl-none bg-white text-gray-800 dark:bg-gray-800 dark:text-gray-200'
         "
       >
-        {{ message.content }}
+        <slot v-if="!message.content" />
+        <span v-else>{{ message.content }}</span>
       </div>
       <div
         class="px-1 text-xs text-gray-500 dark:text-gray-400"

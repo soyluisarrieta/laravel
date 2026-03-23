@@ -90,6 +90,19 @@ const sendMessage = async message => {
             created_at: new Date(),
           }"
         />
+        <ChatMessage
+          v-if="isStreaming || isFetching"
+          :message="{ role: 'assistant' }"
+        >
+          <span class="flex gap-1">
+            <span
+              v-for="i in 3"
+              :key="i"
+              class="block size-1 animate-pulse rounded-full bg-indigo-500 dark:bg-indigo-400"
+              :style="{ animationDelay: i * 0.25 + 's' }"
+            />
+          </span>
+        </ChatMessage>
       </div>
       <ChatInput @messageSent="sendMessage" :chat="chat" />
     </div>
