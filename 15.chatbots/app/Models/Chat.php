@@ -3,11 +3,14 @@
 namespace App\Models;
 
 use Database\Factories\ChatFactory;
+use Exception;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Prism\Prism\ValueObjects\Messages\AssistantMessage;
+use Prism\Prism\ValueObjects\Messages\UserMessage;
 
 class Chat extends Model
 {
@@ -31,5 +34,17 @@ class Chat extends Model
     public function messages(): HasMany
     {
         return $this->hasMany(Message::class);
+    }
+
+    public function getPrismMessages(): array
+    {
+        return $this->messages()
+            ->oldest()
+            ->get()
+            ->map(fn ($message) => match ($message->role) {
+                'user' => new UserMessage($message->content),
+                'assistant' => new AssistantMessage($message->content),
+                default => throw new Exception('Invalid message role'),
+            })->all();
     }
 }
