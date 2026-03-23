@@ -10,6 +10,7 @@
   "devDependencies": {
     "@heroicons/vue": "^2.2.0",
     "@inertiajs/vue3": "^2.0",
+    "@laravel/stream-vue": "^0.3.13",
     "@tailwindcss/forms": "^0.5.7",
     "@tailwindcss/typography": "^0.5.10",
     "@tailwindcss/vite": "^4.0.0",
@@ -19,6 +20,7 @@
     "axios": "^1.11.0",
     "concurrently": "^9.0.1",
     "dayjs": "^1.11.20",
+    "eventsource-parser": "^3.0.6",
     "laravel-vite-plugin": "^2.0.0",
     "postcss": "^8.4.32",
     "prettier": "^3.8.1",
