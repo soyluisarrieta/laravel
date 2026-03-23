@@ -52,7 +52,7 @@ const updateChatName = () => {
       class="flex h-[calc(100vh-140px)] flex-col bg-gray-50 dark:bg-gray-900"
     >
       <div class="flex-1 overflow-y-auto p-6"></div>
-      <ChatInput />
+      <ChatInput :chat="chat" />
     </div>
   </AppLayout>
 </template>
