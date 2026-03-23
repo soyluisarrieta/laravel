@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\SaveMessageRequest;
 use App\Models\Chat;
 use App\Models\Message;
+use Prism\Prism\Enums\Provider;
+use Prism\Prism\Facades\Prism;
 
 class MessageController extends Controller
 {
@@ -34,6 +36,13 @@ class MessageController extends Controller
             'user_id' => $request->user()->id,
             'content' => $request->message,
         ]);
+
+        $response = Prism::text()
+            ->using(Provider::Mistral, 'mistral-small-latest')
+            ->withPrompt($request->message)
+            ->asText();
+
+        dd($response);
 
         return back();
     }
