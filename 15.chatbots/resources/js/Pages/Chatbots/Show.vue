@@ -134,6 +134,11 @@ defineProps({
           class="mt-4 overflow-hidden rounded-lg shadow-lg"
         >
           <section class="bg-white p-6 dark:border-gray-700 dark:bg-gray-800">
+            <h2
+              class="mb-6 text-xl font-extrabold leading-5 text-gray-800 dark:text-gray-200"
+            >
+              Fuentes de conocimiento
+            </h2>
             <KnowledgedSourcesListItem
               :key="knowledgeSource.id"
               v-for="knowledgeSource in chatbot.knowledge_sources"
