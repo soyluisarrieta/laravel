@@ -12,8 +12,17 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('messages', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
+            $table->foreignUuid('chat_id')->constrained();
+            $table->foreignUuid('user_id')->nullable()->constrained();
+            $table->enum('role', ['user', 'assistant', 'system']);
+            $table->text('content');
             $table->timestamps();
+
+            $table->index('chat_id');
+            $table->index('user_id');
+            $table->index('role');
+            $table->index('created_at');
         });
     }
 

@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SaveMessageRequest;
+use App\Models\Chat;
 use App\Models\Message;
-use App\Http\Requests\StoreMessageRequest;
-use App\Http\Requests\UpdateMessageRequest;
 
 class MessageController extends Controller
 {
@@ -27,9 +27,15 @@ class MessageController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreMessageRequest $request)
+    public function store(Chat $chat, SaveMessageRequest $request)
     {
-        //
+        $chat->messages()->create([
+            'role' => 'user',
+            'user_id' => $request->user()->id,
+            'content' => $request->message,
+        ]);
+
+        return back();
     }
 
     /**
@@ -51,7 +57,7 @@ class MessageController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateMessageRequest $request, Message $message)
+    public function update(SaveMessageRequest $request, Message $message)
     {
         //
     }

@@ -3,6 +3,7 @@
 use App\Http\Controllers\ChatbotController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\KnowledgeSourceController;
+use App\Http\Controllers\MessageController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -32,4 +33,6 @@ Route::middleware([
     Route::resource('chats', ChatController::class)->only(['store', 'edit', 'update', 'destroy']);
     Route::get('chatbots/{chatbot}/chats', [ChatController::class, 'index'])
         ->name('chats.index');
+
+    Route::resource('chats.messages', MessageController::class)->only(['store']);
 });

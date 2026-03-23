@@ -3,6 +3,7 @@ import TextArea from '@/Components/TextArea.vue'
 import PrimaryButton from '@/Components/PrimaryButton.vue'
 import { PaperAirplaneIcon } from '@heroicons/vue/24/solid'
 import { useForm } from '@inertiajs/vue3'
+import InputError from '../InputError.vue'
 
 const props = defineProps({
   chat: {
@@ -17,9 +18,15 @@ const form = useForm({
 
 const handleSubmit = () => {
   form.post(
-    route('messages.store', {
+    route('chats.messages.store', {
       chat: props.chat.id,
-    })
+    }),
+    {
+      preserveScroll: true,
+      onSuccess: () => {
+        form.reset()
+      },
+    }
   )
 }
 </script>
@@ -37,7 +44,8 @@ const handleSubmit = () => {
         autofocus
         placeholder="Escribe un mensaje..."
       />
-      <div class="flex items-center justify-end pt-2">
+      <div class="flex items-center justify-end space-x-4 pt-2">
+        <InputError :message="form.errors.message" />
         <PrimaryButton
           class="p-1"
           aria-label="Enviar mensaje"
