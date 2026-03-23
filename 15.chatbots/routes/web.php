@@ -29,5 +29,7 @@ Route::middleware([
 
     Route::resource('chatbots.knowledge-sources', KnowledgeSourceController::class);
 
-    Route::resource('chats', ChatController::class)->only(['store', 'edit', 'update']);
+    Route::resource('chats', ChatController::class)->only(['store', 'edit', 'update', 'destroy']);
+    Route::get('chatbots/{chatbot}/chats', [ChatController::class, 'index'])
+        ->name('chats.index');
 });
