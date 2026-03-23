@@ -5,8 +5,11 @@ namespace App\Http\Controllers;
 use App\Http\Requests\SaveMessageRequest;
 use App\Models\Chat;
 use App\Models\Message;
+use Exception;
 use Prism\Prism\Enums\Provider;
 use Prism\Prism\Facades\Prism;
+use Prism\Prism\ValueObjects\Messages\AssistantMessage;
+use Prism\Prism\ValueObjects\Messages\UserMessage;
 
 class MessageController extends Controller
 {
@@ -45,11 +48,20 @@ class MessageController extends Controller
             ->pluck('extracted_content')
             ->join('\n\n');
 
+        $messages = $chat->messages()
+            ->oldest()
+            ->get()
+            ->map(fn ($message) => match ($message->role) {
+                'user' => new UserMessage($message->content),
+                'assistant' => new AssistantMessage($message->content),
+                default => throw new Exception('Invalid message role'),
+            });
+
         $response = Prism::text()
             ->using(Provider::Mistral, $chatbot->model)
-            ->withSystemPrompt($chatbot->system_prompt)
+            ->withSystemPrompt($systemPrompt)
             ->usingTemperature($chatbot->temperature)
-            ->withPrompt($request->message)
+            ->withMessages($messages->all())
             ->asText();
 
         $chat->messages()->create([
