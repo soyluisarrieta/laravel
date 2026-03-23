@@ -7,6 +7,7 @@ use App\Models\Chat;
 use App\Models\Message;
 use Prism\Prism\Enums\Provider;
 use Prism\Prism\Facades\Prism;
+use Prism\Prism\Streaming\Events\TextDeltaEvent;
 
 class MessageController extends Controller
 {
@@ -39,19 +40,22 @@ class MessageController extends Controller
             'content' => $request->message,
         ]);
 
-        $response = Prism::text()
+        return Prism::text()
             ->using(Provider::Mistral, $chat->chatbot->model)
             ->withSystemPrompt($chat->chatbot->buildSystemPrompt())
             ->usingTemperature($chat->chatbot->temperature)
             ->withMessages($chat->getPrismMessages())
-            ->asText();
+            ->asEventStreamResponse(function ($_, $events) use ($chat) {
+                $fullText = $events
+                    ->filter(fn ($event) => $event instanceof TextDeltaEvent)
+                    ->map(fn (TextDeltaEvent $event) => $event->delta)
+                    ->join('');
 
-        $chat->messages()->create([
-            'role' => 'assistant',
-            'content' => $response->text,
-        ]);
-
-        return back();
+                $chat->messages()->create([
+                    'role' => 'assistant',
+                    'content' => $fullText,
+                ]);
+            });
     }
 
     /**

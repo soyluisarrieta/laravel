@@ -16,18 +16,23 @@ const form = useForm({
   message: '',
 })
 
+const emit = defineEmits(['messageSent'])
+
 const handleSubmit = () => {
-  form.post(
-    route('chats.messages.store', {
-      chat: props.chat.id,
-    }),
-    {
-      preserveScroll: true,
-      onSuccess: () => {
-        form.reset()
-      },
-    }
-  )
+  emit('messageSent', form.message)
+  form.reset()
+
+  // form.post(
+  //   route('chats.messages.store', {
+  //     chat: props.chat.id,
+  //   }),
+  //   {
+  //     preserveScroll: true,
+  //     onSuccess: () => {
+  //       form.reset()
+  //     },
+  //   }
+  // )
 }
 </script>
 
