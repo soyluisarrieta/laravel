@@ -36,8 +36,9 @@ defineProps({
       class="mt-1 block w-full"
       placeholder="Selecciona un modelo"
       :options="[
-        { value: 'gpt-3.5-turbo', label: 'GPT-3.5 Turbo' },
-        { value: 'gpt-4', label: 'GPT-4' },
+        { value: 'mistral-small-latest', label: 'Mistral Small' },
+        { value: 'mistral-medium-latest', label: 'Mistral Medium' },
+        { value: 'mistral-large-latest', label: 'Mistral Large' },
       ]"
     />
     <InputError :message="form.errors.model" class="mt-2" />

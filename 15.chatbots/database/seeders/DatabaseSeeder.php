@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
 
         User::factory()
             ->withPersonalTeam()
-            ->hasChatbots(2)
+            // ->hasChatbots(2)
             ->create([
                 'name' => 'Luis Arrieta',
                 'email' => 'luisarrieta796@gmail.com',
